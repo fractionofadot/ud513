@@ -182,9 +182,25 @@ class Graph(object):
         RETURN: a list of the node values (integers)."""
         node = self.find_node(start_node_num)
         self._clear_visited()
-        ret_list = [node.value]
+
         # Your code here
-        return ret_list
+        bfs_queue = [node]
+
+        while bfs_queue != []:
+            node = bfs_queue[0]
+            if node.value not in self.visited:
+                self.visited.append(node.value)
+
+            for edge in node.edges:
+                if not edge.node_to.visited:
+                    edge.node_to.visited = True
+                    if edge.node_to not in bfs_queue:
+                        bfs_queue.append(edge.node_to)
+                if edge.node_to.value not in self.visited:
+                    self.visited.append(edge.node_to.value)
+            bfs_queue.pop(0)
+
+        return self.visited
 
     def bfs_names(self, start_node_num):
         """Return the results of bfs with numbers converted to names."""
