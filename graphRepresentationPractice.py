@@ -55,7 +55,15 @@ class Graph(object):
         Each section in the list will store a list
         of tuples that looks like this:
         (To Node, Edge Value)"""
-        return []
+        adjacency_list = [None] * (len(self.edges)+1)
+        for n in range(len(self.nodes)):
+            node_edges = []
+            for e in self.nodes[n].edges:
+                if self.nodes[n].value == e.node_from.value:
+                    node_edges.append((e.node_to.value, e.value))
+            if node_edges != []:
+                adjacency_list[self.nodes[n].value] = node_edges
+        return adjacency_list
     
     def get_adjacency_matrix(self):
         """Return a matrix, or 2D list.
@@ -66,7 +74,7 @@ class Graph(object):
         return []
 
 graph = Graph()
-graph.insert_edge(100, 1, 2)
+graph.insert_edge(100, 1, 2) 
 graph.insert_edge(101, 1, 3)
 graph.insert_edge(102, 1, 4)
 graph.insert_edge(103, 3, 4)
@@ -74,5 +82,6 @@ graph.insert_edge(103, 3, 4)
 print(graph.get_edge_list())
 # Should be [None, [(2, 100), (3, 101), (4, 102)], None, [(4, 103)], None]
 print(graph.get_adjacency_list())
+#assert(graph.get_adjacency_list() == [None, [(2, 100), (3, 101), (4, 102)], None, [(4, 103)], None])
 # Should be [[0, 0, 0, 0, 0], [0, 0, 100, 101, 102], [0, 0, 0, 0, 0], [0, 0, 0, 0, 103], [0, 0, 0, 0, 0]]
 print(graph.get_adjacency_matrix())
