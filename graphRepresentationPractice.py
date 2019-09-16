@@ -55,7 +55,7 @@ class Graph(object):
         Each section in the list will store a list
         of tuples that looks like this:
         (To Node, Edge Value)"""
-        adjacency_list = [None] * (len(self.edges)+1)
+        adjacency_list = [None] * (self.find_max_index() + 1)
         for n in range(len(self.nodes)):
             node_edges = []
             for e in self.nodes[n].edges:
